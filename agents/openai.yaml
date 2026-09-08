@@ -1,0 +1,4 @@
+interface:
+  display_name: "NAI5 Prompting"
+  short_description: "写 NovelAI Diffusion V5 提示词：从半句话构思分镜，到成品 Prompt / Character / UC"
+  default_prompt: "按 nai5-prompting 直接给我成品 NAI V5 提示词："

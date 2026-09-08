@@ -1,0 +1,99 @@
+[
+  {
+    "skills": ["nai5-prompting"],
+    "query": "白发红眼的女孩坐在图书馆窗边看书，午后阳光，很安静",
+    "files": [],
+    "expected_behavior": [
+      "识别为 A 档（谁、在哪、什么调子都有），只输出 1 条成品，不追加多条方案",
+      "按 Prompt / Character 1 / UC 三个字段输出；人数 tag 1girl, solo 放最前且只出现一次",
+      "发色、瞳色只出现在 Character 1，不出现在 Prompt；用户没给的发型长短、服装不补",
+      "画师串留 <画师串：自己贴> 占位或整行省略，不自己编画师名",
+      "UC 只写「用默认预设」；Prompt 里没有 very aesthetic / masterpiece / no text",
+      "没有解说生成流程的段落，A 档也没有取向说明附注"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "画个猫耳少女",
+    "files": [],
+    "expected_behavior": [
+      "识别为 B 档（只有主体），直接给 1 条成品而不是反问用户要什么场景",
+      "补的情景、镜头、光线走最常见的取值（单人、看镜头、大主体、柔光、中低对比）",
+      "成品末尾恰好一行「补了哪几处」说明，没有其他解说",
+      "视线、取景距离、背景形态、体位各只出现一个 tag"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "有没有夏天的图",
+    "files": [],
+    "expected_behavior": [
+      "没有图片检索能力时，先用一句话点明这是新写的提示词而不是找现成的图",
+      "给 2–3 条方案，每条有自己的标题行、完整的 Prompt / Character / UC 字段，不共用角色栏",
+      "任意两条方案至少在题材 / 动作 / 场景 / 镜头 / 光色 / 氛围中的两层上不同，而不只是换发色或服装颜色",
+      "至少一条走「空地」（硬光强对比 / 不直视 / 远景小人 / 黄昏 / 负空间 / 分格 / 贴纸）",
+      "每条末尾恰好一行取向说明，只说偏离基线的地方，不复述构思流程"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "随便写点什么吧，你决定",
+    "files": [],
+    "expected_behavior": [
+      "识别为 D 档，按 C/D 走多条方案（2–3 条），首答就是成品，不先反问偏好",
+      "至少一条走空地；每条附一行取向说明"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "两个女孩在放学后的教室，一个逗另一个，被逗的那个脸红",
+    "files": [],
+    "expected_behavior": [
+      "Prompt 以 2girls 开头，角色栏恰好两格（Character 1 / Character 2）",
+      "施受方向用 source# / target# 前缀写在角色栏，不写在主提示词里",
+      "句子里用外观（发色、发型、服装）指认谁对谁做了什么，而不是只用 Character 编号",
+      "接触点写清是谁的手碰到谁的哪里",
+      "UC 里没有 extra characters，或明确说明要去掉预设里的那一段"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "三个女孩站在街上，一个在近景只露半身，一个在中景，一个在远处很小",
+    "files": [],
+    "expected_behavior": [
+      "Prompt 以 3girls 开头，角色栏恰好三格",
+      "成品末尾附一行 Position 建议，指明切 Custom 并给出三人点位（如左下 / 中 / 右上）",
+      "句子里描述前中后景层次，但不依赖文字去控制占画幅"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "我写了 she is sitting with one leg pulled up and resting her head on her hand，结果腿画糊了还多出一条腿，怎么改？",
+    "files": [],
+    "expected_behavior": [
+      "诊断为姿势写成了句子（§8 排查表最高频失败模式）",
+      "把姿势改成 tag（如 sitting, leg up, arm support, head rest），句子只保留进行中状态或关系",
+      "直接给出修改后的成品或修改片段，并说明改了哪几处（迭代规则：每轮只改 2–3 处）"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "帮我配一串好看的画师串",
+    "files": [],
+    "expected_behavior": [
+      "不自己编画师名或画师组合",
+      "说明画师串只用用户自己给的，成品里留 <画师串：自己贴> 占位或整行省略",
+      "不使用 <artist block> 等其他占位形式"
+    ]
+  },
+  {
+    "skills": ["nai5-prompting"],
+    "query": "画一张明日方舟的铃兰",
+    "files": [],
+    "expected_behavior": [
+      "版权角色：Character 1 只写性别词 + 角色名（作品名可选），不再逐条列发色 / 瞳色 / 服装",
+      "有检索能力时先查角色档案确认外貌结构（九尾狐）与职能，档案不直接进提示词；无检索能力时不凭印象分配职能",
+      "角色名拼法拿不准时标注是猜测，不自造下划线连写"
+    ]
+  }
+]
